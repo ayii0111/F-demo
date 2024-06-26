@@ -21,7 +21,9 @@ rules: {
     'plugin:vue/vue3-essential',
     'eslint:recommended',
     '@vue/eslint-config-typescript',
-    '@vue/eslint-config-prettier/skip-formatting'
+    '@vue/eslint-config-prettier/skip-formatting',
+    './eslintrc-auto-import.json',
+    'plugin:you-dont-need-lodash-underscore/compatible'
   ],
   overrides: [
     {

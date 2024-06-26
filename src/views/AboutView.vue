@@ -1,15 +1,9 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <DialogComponent v-model:isVisible="dialogs.isVisible" :title="dialogs.title" :message="dialogs.message" />
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue';
+
+const dialogs = ref({ isVisible: false, title: 'Dialog 1', message: 'Message 1' });
+</script>
