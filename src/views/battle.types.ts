@@ -12,7 +12,8 @@ interface PlayerBasicInfo {
 // 角色資料介面
 interface Player extends PlayerBasicInfo {
   refDom?: Element | ComponentPublicInstance | null
-  isAnimating?: Ref<boolean | null> | (boolean | null)
+  isGrow?: Ref<boolean | null> | (boolean | null)
+  isBuzzOut?: Ref<boolean | null> | (boolean | null)
   oringInfo?: PlayerBasicInfo
 }
 
@@ -24,8 +25,11 @@ interface MobsBasicInfo {
   status: string
   skill: { name: string; cost: number; damage: number }[]
 }
-interface Mobs extends MobsBasicInfo {
+interface Mob extends MobsBasicInfo {
+  refDom?: Element | ComponentPublicInstance | null
+  isGrow?: Ref<boolean | null> | (boolean | null)
+  isBuzzOut?: Ref<boolean | null> | (boolean | null)
   oringInfo?: MobsBasicInfo
 }
 
-export type { Player, Mobs }
+export type { Player, Mob }

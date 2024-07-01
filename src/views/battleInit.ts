@@ -1,4 +1,4 @@
-import type { Player, Mobs } from './battle.types'
+import type { Player, Mob } from './battle.types'
 import { useHvr } from '../components/Hvr'
 import type { Ref } from 'vue'
 
@@ -47,7 +47,7 @@ export const useBattleInit = () => {
     }
   ]
   // 建立怪物資料
-  const mobs: Mobs[] = [
+  const mobs: Mob[] = [
     {
       name: '巴哈姆特',
       class: 'BOSS',
@@ -61,12 +61,14 @@ export const useBattleInit = () => {
   // 將每支角色原始資料放到角色下面的 oringInfo 屬性
   const players2 = players.map((player) => {
     // 使用淺拷貝，避免物件直接同步
-    return (player.oringInfo = { ...player })
+    player.oringInfo = { ...player }
+    return player
   })
 
   const mobs2 = mobs.map((mob) => {
     // 使用淺拷貝，避免物件直接同步
-    return (mob.oringInfo = { ...mob })
+    mob.oringInfo = { ...mob }
+    return mob
   })
 
   // 建立角色響應資料
@@ -74,22 +76,34 @@ export const useBattleInit = () => {
   const playersRef = ref(players2) as Ref<Player[]>
 
   // 建立怪物響應資料
-  const mobsRef = ref(mobs2)
+  const mobsRef = ref(mobs2) as Ref<Mob[]>
 
   const itemRefs = ref<HTMLDivElement[]>([])
-  const isAnimating: (Ref<boolean | null> | (boolean | null))[] = []
+  const mobsDom = ref<HTMLDivElement[]>([])
+
+  const isGrow: (Ref<boolean | null> | (boolean | null))[] = []
+  const isBuzzOut: (Ref<boolean | null> | (boolean | null))[] = []
+
+  const isGrowMob: (Ref<boolean | null> | (boolean | null))[] = []
+  const isBuzzOutMob: (Ref<boolean | null> | (boolean | null))[] = []
   for (let i = 0; i < 3; i++) {
-    isAnimating.push(useHvr(itemRefs, i, 'grow'))
+    isGrow.push(useHvr(itemRefs, i, 'grow'))
   }
+  isGrowMob.push(useHvr(mobsDom, 0, 'grow'))
 
   onMounted(() => {
     // 將角色資訊區塊的 Dom、相應的特效開關，添加到角色的物件中
     // 將角色的 Dom與isAnimating響應變數，綁定到角色的物件上
     playersRef.value.forEach((player, i) => {
       player.refDom = itemRefs.value[i]
-      player.isAnimating = isAnimating[i]
+      player.isGrow = isGrow[i]
+      player.isBuzzOut = isBuzzOut[i]
+    })
+    mobsRef.value.forEach((mob, i) => {
+      mob.refDom = mobsDom.value[i]
+      mob.isGrow = isGrowMob[i]
+      mob.isBuzzOut = isBuzzOutMob[i]
     })
   })
-
-  return { playersRef, mobsRef, itemRefs, isAnimating }
+  return { playersRef, mobsRef, itemRefs, mobsDom, isAnimating: isGrow }
 }
