@@ -1,8 +1,8 @@
-import type { Player, Mob } from './battle.types'
+import type { Player, Mob } from './playerMob.types'
 import { useHvr } from '../components/Hvr'
 import type { Ref } from 'vue'
 
-export const useBattleInit = () => {
+export const usePlayerWithMob = () => {
   // 建立角色資料
   const players: Player[] = [
     {

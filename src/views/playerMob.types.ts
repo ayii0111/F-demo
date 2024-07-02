@@ -1,4 +1,4 @@
-import type { Ref, ComponentPublicInstance } from 'vue'
+import type { Ref } from 'vue'
 
 // 角色初始基礎資料介面
 interface PlayerBasicInfo {
@@ -11,7 +11,7 @@ interface PlayerBasicInfo {
 }
 // 角色資料介面
 interface Player extends PlayerBasicInfo {
-  refDom?: Element | ComponentPublicInstance | null
+  refDom?: Element | null
   isGrow?: Ref<boolean | null> | (boolean | null)
   isBuzzOut?: Ref<boolean | null> | (boolean | null)
   oringInfo?: PlayerBasicInfo
@@ -26,10 +26,17 @@ interface MobsBasicInfo {
   skill: { name: string; cost: number; damage: number }[]
 }
 interface Mob extends MobsBasicInfo {
-  refDom?: Element | ComponentPublicInstance | null
+  refDom?: Element | null
   isGrow?: Ref<boolean | null> | (boolean | null)
   isBuzzOut?: Ref<boolean | null> | (boolean | null)
   oringInfo?: MobsBasicInfo
 }
 
-export type { Player, Mob }
+interface Skill {
+  id: number
+  name: string
+  cost: number
+  damage: number
+}
+
+export type { Player, Mob, Skill }
